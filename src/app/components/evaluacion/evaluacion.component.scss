@@ -1,0 +1,166 @@
+.mat-card {
+  background-color: #f1f5f8;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  color: white;
+  text-align: center;
+}
+
+.wrap {
+  white-space: pre-wrap;
+  /* CSS3 */
+  white-space: -moz-pre-wrap;
+  /* Firefox */
+  white-space: -pre-wrap;
+  /* Opera <7 */
+  white-space: -o-pre-wrap;
+  /* Opera 7 */
+  word-wrap: break-word;
+  /* IE */
+  border: 1px solid blue;
+  height: 48px;
+  max-height: 96px;
+  overflow: auto;
+  width: 200px;
+}
+
+.selectorPlanStyle {
+  width: 75%;
+  padding-right: 5%;
+}
+
+.selectorVigenciaStyle {
+  width: 20%;
+}
+
+.align-button-ingresar {
+  text-align: center;
+}
+
+.textGuide {
+  background-color: #ffff;
+  border: 1px solid var(--primary);
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: var(--primary) 3px 4px 0;
+  color: #0a0a0a;
+  display: inline-block;
+  font-size: 1.1em;
+  padding: 1%;
+  text-decoration: none;
+  margin-bottom: 1%;
+  width: 97%;
+}
+
+.table-responsive {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+
+  .mat-table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    display: table;
+    border-collapse: collapse;
+    margin: 0px;
+  }
+
+  .mat-row,
+  .mat-header-row {
+    display: table-row;
+    text-align: center;
+  }
+
+  .mat-cell,
+  .mat-header-cell {
+    text-align: center;
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 5px;
+    line-break: unset;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+
+  .mat-cell {
+    text-align: center;
+    word-wrap: initial;
+    display: table-cell;
+    padding: 0px 5px;
+    line-break: unset;
+    width: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: middle;
+    white-space: pre-wrap;
+  }
+
+  .mat-footer-cell {
+    background-color: var(--primary);
+    color: white;
+    text-align: center;
+  }
+}
+
+th.mat-header-cell {
+  text-align: center;
+  padding: 5px 5px 5px 0;
+  color: white;
+}
+
+.header1 {
+  background-color: var(--primary);
+}
+
+.header2 {
+  background-color: var(--color900);
+}
+
+.header3 {
+  background-color: var(--color800);
+}
+
+.header4 {
+  background-color: var(--color700);
+}
+
+.header5 {
+  background-color: var(--color600);
+}
+
+.oscuro {
+  background-color: #e7d6d6;
+}
+
+.claro {
+  background-color: white;
+}
+
+// Colores para Cumplimiento por meta
+.meta-rojo {
+  background-color: #c71a1b;
+  color: #fff;
+}
+
+.meta-piel {
+  background-color: #ffa99e;
+}
+
+.meta-naranja {
+  background-color: #fdc100;
+}
+
+.meta-amarillo {
+  background-color: #fffe00;
+}
+
+.meta-verde {
+  background-color: #72ac41;
+}
