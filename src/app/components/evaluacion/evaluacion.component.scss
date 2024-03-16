@@ -164,3 +164,24 @@ th.mat-header-cell {
 .meta-verde {
   background-color: #72ac41;
 }
+
+.graficos {
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  height: 400px;
+}
+
+.pie-chart {
+  width: 30%;
+}
+
+.pie-chart-titulo {
+  font-size: 12px;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.bar-chart {
+  width: 50%;
+}

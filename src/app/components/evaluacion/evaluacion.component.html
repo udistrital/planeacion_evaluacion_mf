@@ -65,18 +65,17 @@
 
     <ng-container *ngIf="bandera">
       <!-- Gráficos -->
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <div style="width: 30%;" height="400">
-          <p>{{pieTitle}}</p>
+      <div class="graficos">
+        <div class="pie-chart">
+          <p class="pie-chart-titulo">{{pieTitle}}</p>
           <ngx-charts-pie-chart
             [scheme]="pieChartColor"
             [results]="pieChartData"
-            [labels]="true"
             [doughnut]="true"
             [arcWidth]=0.5>
           </ngx-charts-pie-chart>
         </div>
-        <div style="width: 70%;">
+        <div class="bar-chart">
           <ngx-charts-bar-vertical
             [scheme]="barChartColor"
             [results]="barChartData"
