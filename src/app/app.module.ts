@@ -5,16 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table'
+import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { EvaluacionComponent } from './components/evaluacion/evaluacion.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    EvaluacionComponent
-  ],
+  declarations: [AppComponent, EvaluacionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,9 +20,9 @@ import { EvaluacionComponent } from './components/evaluacion/evaluacion.componen
     MatTableModule,
     MatSelectModule,
     BrowserAnimationsModule,
-    NgxChartsModule
+    NgxChartsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

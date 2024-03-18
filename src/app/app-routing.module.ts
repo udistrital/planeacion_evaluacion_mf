@@ -5,7 +5,7 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { getSingleSpaExtraProviders } from 'single-spa-angular';
 import { EvaluacionComponent } from './components/evaluacion/evaluacion.component';
 
-const routes: Routes = [{path: '', component: EvaluacionComponent}];
+const routes: Routes = [{ path: '', component: EvaluacionComponent }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
@@ -14,6 +14,7 @@ const routes: Routes = [{path: '', component: EvaluacionComponent}];
     provideRouter(routes),
     { provide: APP_BASE_HREF, useValue: '/evaluacion/' },
     getSingleSpaExtraProviders(),
-    provideHttpClient(withFetch()) ]
+    provideHttpClient(withFetch()),
+  ],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
