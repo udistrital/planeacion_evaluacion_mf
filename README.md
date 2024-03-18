@@ -1,27 +1,101 @@
-# PlaneacionEvaluacionMf
+# planeacion_evaluacion_mf
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.1.0.
+Microfrontend de evaluación. Contiene las características, funcionalidades y vistas iniciales del componente de evaluación del Cliente del Sistema de Planeación.
 
-## Development server
+## Especificaciones Técnicas
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### Tecnologías Implementadas y Versiones
 
-## Code scaffolding
+- [Angular 16.1.0](https://angular.io/)
+- [Node 16.14.0](https://nodejs.org/en)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### Variables de Entorno
 
-## Build
+```shell
+# En Pipeline
+SLACK_AND_WEBHOOK: WEBHOOK ..
+AWS_ACCESS_KEY_ID: llave de acceso ID Usuario AWS
+AWS_SECRET_ACCESS_KEY: Secreto de Usuario AWS
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### Ejecución del Proyecto
 
-## Running unit tests
+Clonar el proyecto del repositorio de git
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+# clone the project
+git clone https://github.com/udistrital/planeacion_evaluacion_mf.git
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# enter the project directory
+cd planeacion_evaluacion_mf
+```
 
-## Further help
+Iniciar el servidor en local
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```bash
+# install dependency
+npx npm install
+or
+npm install
+# start server
+npx ng serve
+# Whenever you want to change the port just run
+npx ng dev --port = 9528
+```
+
+Linter
+
+```bash
+# Angular linter
+npm run lint
+# run linter and auto fix
+npm run lint:fix
+# run linter on styles
+npm run lint:styles
+# run lint UI
+npm run lint:ci
+```
+
+### Ejecución Dockerfile
+
+```bash
+# Does not apply
+```
+
+### Ejecución docker-compose
+
+```bash
+# Does not apply
+```
+
+### Ejecución Pruebas
+
+Pruebas unitarias powered by Jest
+
+```bash
+# run unit test
+npm run test
+# Runt linter + unit test
+npm run test:ui
+```
+
+## Estado CI
+
+```bash
+# Developing
+```
+
+## Modelo de Datos
+
+```bash
+# Developing
+```
+
+## Licencia
+
+planeacion_evaluacion_mf is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (atSara Sampaio your option) any later version.
+
+planeacion_evaluacion_mf is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with planeacion_evaluacion_mf. If not, see https://www.gnu.org/licenses/.
