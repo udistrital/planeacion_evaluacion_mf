@@ -217,7 +217,7 @@ export class EvaluacionComponent implements OnInit {
     this.bandera = true;
     this.actividades = [];
     this.spans = [];
-    this.request.get(environment.PLANES_MID, `evaluacion/` + this.vigencia.Id + `/` + this.plan.id + `/` + this.periodo.id).subscribe((data: any) => {
+    this.request.get(environment.PLANEACION_EVALUACION_MID, `evaluacion/` + this.vigencia.Id + `/` + this.plan.id + `/` + this.periodo.id).subscribe((data: any) => {
       if (data) {
         this.actividades = data.Data;
         this.actividades.forEach((actividad: any) => {
@@ -351,7 +351,7 @@ export class EvaluacionComponent implements OnInit {
         Swal.showLoading();
       },
     });
-    this.request.get(environment.PLANES_MID, `evaluacion/planes_periodo/` + this.vigencia.Id + `/` + this.unidad.Id).subscribe((data: any) => {
+    this.request.get(environment.PLANEACION_EVALUACION_MID, `evaluacion/planes_periodo/` + this.vigencia.Id + `/` + this.unidad.Id).subscribe((data: any) => {
       if (data) {
         if (data.Data != null) {
           this.planes = data.Data;
