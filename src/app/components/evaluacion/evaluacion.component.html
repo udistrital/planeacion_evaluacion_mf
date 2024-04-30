@@ -12,56 +12,56 @@
     </ng-container>
     
     <mat-form-field class="selectorPlanStyle" appearance="fill">
-      <mat-label id="tipo-input-label">Seleccione la unidad</mat-label>
-      <mat-select [(value)]="unidad" (selectionChange)="onChangeU($event.value)">
-        <mat-option>--</mat-option>
-        <mat-option *ngFor="let unidad of unidades" [value]="unidad">
-          {{unidad.Nombre}}
+      <mat-label id="tipo-input-label">Seleccione el Plan de Acción</mat-label>
+      <mat-select (selectionChange)="onChangeP($event.value)">
+        <mat-option [value]="''">--</mat-option>
+        <mat-option *ngFor="let nombrePlan of nombresPlanes" [value]="nombrePlan">
+          {{nombrePlan}}
         </mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="selectorVigenciaStyle" appearance="fill">
       <mat-label id="tipo-input-label">Seleccione la vigencia</mat-label>
-      <mat-select (selectionChange)="onChangeV($event.value)">
+      <mat-select (selectionChange)="onChangeV($event.value)" [disabled]="!planSelected">
         <mat-option>--</mat-option>
         <mat-option *ngFor="let vigencia of vigencias" [value]="vigencia">
           {{vigencia.Nombre}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-
-    <ng-container *ngIf="vigenciaSelected && unidadSelected">
+    
+    <div *ngIf='vigenciaSelected && planSelected && existenUnidades'>
       <mat-form-field class="selectorPlanStyle" appearance="fill">
-        <mat-label id="tipo-input-label">Seleccione el Plan de Acción</mat-label>
-        <mat-select (selectionChange)="onChangeP($event.value)">
+        <mat-label id="tipo-input-label">Seleccione la unidad</mat-label>
+        <mat-select [(value)]="unidad" (selectionChange)="onChangeU($event.value)" [disabled]="!vigenciaSelected">
           <mat-option>--</mat-option>
-          <mat-option *ngFor="let plan of planes" [value]="plan">
-            {{plan.plan}}
+          <mat-option [value]="'TODAS'">TODAS LAS UNIDADES</mat-option>
+          <mat-option *ngFor="let unidad of unidades" [value]="unidad">
+            {{unidad.Nombre}}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
       <mat-form-field class="selectorVigenciaStyle" appearance="fill">
         <mat-label id="tipo-input-label">Seleccione el periodo</mat-label>
-        <mat-select (selectionChange)="onChangePe($event.value)">
-          <mat-option>--</mat-option>
-          <mat-option *ngFor="let periodo of plan.periodos" [value]="periodo">
+        <mat-select (selectionChange)="onChangePe($event.value)" [(value)]="periodo" [disabled]="!unidadSelected">
+          <mat-option *ngIf="unidad !== 'TODAS'">--</mat-option>
+          <mat-option *ngIf="unidad === 'TODAS'" [value]="'TODOS'">TODOS LOS TRIMESTRES</mat-option>
+          <mat-option *ngFor="let periodo of periodos" [value]="periodo">
             {{periodo.nombre}}
           </mat-option>
         </mat-select>
       </mat-form-field>
-    </ng-container>
+    </div>
 
     <div class="align-button-ingresar">
-      <button *ngIf="unidadSelected != false && vigenciaSelected != false"
-        [disabled]="!(planSelected && periodoSelected)" (click)="ingresarEvaluacion()" 
-        class="btn-gestion-seg"
-        mat-raised-button color="primary">
-        Consultar evaluación
-      </button>
+      <button *ngIf="unidadSelected"
+        [disabled]="!(planSelected && vigenciaSelected && unidadSelected && periodoSelected)"
+        (click)="ingresarEvaluacion()" class="btn-gestion-seg" mat-raised-button color="primary">Consultar
+        evaluación</button>
     </div>
-    <br>
+<br>
 
     <ng-container *ngIf="bandera">
       <!-- Gráficos -->
