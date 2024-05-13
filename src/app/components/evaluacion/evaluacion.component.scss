@@ -1,4 +1,6 @@
-.mat-card {
+@use "../styles/global";
+
+.mat-mdc-card {
   background-color: #f1f5f8;
 }
 
@@ -70,14 +72,14 @@ th {
     margin: 0px;
   }
 
-  .mat-row,
-  .mat-header-row {
+  .mat-mdc-row,
+  .mat-mdc-header-row {
     display: table-row;
     text-align: center;
   }
 
-  .mat-cell,
-  .mat-header-cell {
+  .mat-mdc-cell,
+  .mat-mdc-header-cell {
     text-align: center;
     word-wrap: initial;
     display: table-cell;
@@ -89,7 +91,7 @@ th {
     vertical-align: middle;
   }
 
-  .mat-cell {
+  .mat-mdc-cell {
     text-align: center;
     word-wrap: initial;
     display: table-cell;
@@ -102,14 +104,14 @@ th {
     white-space: pre-wrap;
   }
 
-  .mat-footer-cell {
+  .mat-mdc-footer-cell {
     background-color: var(--primary);
     color: white;
     text-align: center;
   }
 }
 
-th.mat-header-cell {
+th.mat-mdc-header-cell {
   text-align: center;
   padding: 5px 5px 5px 0;
   color: white;
