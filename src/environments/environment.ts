@@ -12,6 +12,7 @@ export const environment = {
     appMenu: 'PLANEACION',
     SINTOMAS_SERVICE: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/sintomas_crud/v1/',
     //SERVICES PLANEACIÓN
+    
     // PLANES_CRUD: 'http://localhost:8080/',
     // PLANES_MID: 'http://localhost:8081/v1/',
     PLANES_CRUD: 'http://pruebasapi2.intranetoas.udistrital.edu.co:8523/',
