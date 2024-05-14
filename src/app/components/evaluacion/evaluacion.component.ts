@@ -218,7 +218,7 @@ export class EvaluacionComponent implements OnInit {
     this.userService.user$.subscribe((data: any) => {
       this.request.get(environment.TERCEROS_SERVICE, `datos_identificacion/?query=Numero:` + data['userService']['documento'])
         .subscribe((datosInfoTercero: any) => {
-          this.request.get(environment.PLANES_MID, `formulacion/vinculacion_tercero/` + datosInfoTercero[0].TerceroId.Id)
+          this.request.get(environment.PLANEACION_FORMULACION_MID, `formulacion/vinculacion_tercero/` + datosInfoTercero[0].TerceroId.Id)
             .subscribe((vinculacion: any) => {
               if (vinculacion["Data"] != "") {
                 this.request.get(environment.OIKOS_SERVICE, `dependencia_tipo_dependencia?query=DependenciaId:` + vinculacion["Data"]["DependenciaId"]).subscribe((dataUnidad: any) => {
@@ -288,7 +288,7 @@ export class EvaluacionComponent implements OnInit {
         Swal.showLoading();
       },
     });
-    this.request.get(environment.PLANES_MID, `seguimiento/get_periodos/` + this.vigencia.Id).subscribe((data: any) => {
+    this.request.get(environment.PLANEACION_SEGUIMIENTO_MID, `seguimiento/get_periodos/` + this.vigencia.Id).subscribe((data: any) => {
       if (data) {
         this.periodos = data.Data;
       }
