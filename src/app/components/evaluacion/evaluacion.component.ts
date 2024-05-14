@@ -417,7 +417,6 @@ export class EvaluacionComponent implements OnInit {
         Swal.showLoading();
       },
     });
-    
     this.request.get(environment.PLANEACION_EVALUACION_MID, `evaluacion/planes/`).subscribe((data: any) => {
       if (data) {
         if (data.Data != null) {
