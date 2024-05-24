@@ -1,12 +1,12 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
-import { Injectable, forwardRef, Inject, NgZone } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class HttpErrorManager {
-  constructor() {}
+  constructor() { }
 
   public handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
@@ -18,7 +18,7 @@ export class HttpErrorManager {
 
       console.error(
         `Backend returned code ${error.status ? error.status : 'no code'}, ` +
-          `body was: ${error}`
+        `body was: ${error}`
       );
     }
     // return an observable with a user-facing error message
