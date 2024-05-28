@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { MatTable } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { UserService } from '../../services/userService';
-import { ImplicitAutenticationService } from '../../services/implicit_autentication.service';
+import { ImplicitAutenticationService } from '@udistrital/planeacion-utilidades-module';
 import { Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
@@ -60,7 +60,7 @@ export class EvaluacionComponent implements OnInit {
 
   // Opciones para gráfico "pie chart"
   pieTitle = 'Cumplimiento general Plan de Acción -';
-  pieChartData = [{name: '', value: 75},{name: '', value: 25}];
+  pieChartData = [{ name: '', value: 75 }, { name: '', value: 25 }];
   pieChartColor: Color = {
     name: 'customScheme',
     selectable: true,
@@ -69,7 +69,7 @@ export class EvaluacionComponent implements OnInit {
   };
 
   // Opciones para gráfico "vertical bar chart"
-  barChartData = [{name: '', value: 0}];
+  barChartData = [{ name: '', value: 0 }];
   barChartColor: Color = {
     name: 'customScheme',
     selectable: true,
@@ -79,10 +79,11 @@ export class EvaluacionComponent implements OnInit {
 
   @ViewChild(MatTable) table!: MatTable<any>;
 
+  private autenticationService = new ImplicitAutenticationService();
+
   constructor(
-    private request: RequestManager,  
-    private autenticationService: ImplicitAutenticationService, 
-    private userService: UserService, 
+    private request: RequestManager,
+    private userService: UserService,
     private router: Router
   ) {
     this.loadVigencias();
@@ -146,7 +147,7 @@ export class EvaluacionComponent implements OnInit {
   }
 
   getRol() {
-    let roles: any = this.autenticationService.getRole();
+    let roles: any = this.autenticationService.getRoles();
     if (roles.__zone_symbol__value.find((x: any) => x == 'JEFE_DEPENDENCIA' || x == 'ASISTENTE_DEPENDENCIA')) {
       this.rol = 'JEFE_DEPENDENCIA';
       this.validarUnidad();
@@ -159,7 +160,7 @@ export class EvaluacionComponent implements OnInit {
   // Agregar color al Cumplimiento por Meta
   colorCM(rowTrimestreMeta: number): string {
     if (rowTrimestreMeta >= 0 && rowTrimestreMeta <= 0.2) {
-      return 'meta-rojo'; 
+      return 'meta-rojo';
     } else if (rowTrimestreMeta <= 0.4) {
       return 'meta-piel';
     } else if (rowTrimestreMeta <= 0.6) {
@@ -172,11 +173,11 @@ export class EvaluacionComponent implements OnInit {
   }
 
   validarUnidad() {
-    var documento: any = this.autenticationService.getDocument();
+    var documento: any = this.autenticationService.getDocumento();
     this.request.get(environment.TERCEROS_SERVICE, `datos_identificacion/?query=Numero:` + documento.__zone_symbol__value)
       .subscribe((datosInfoTercero: any) => {
         this.request.get(environment.PLANES_MID, `formulacion/vinculacion_tercero/` + datosInfoTercero[0].TerceroId.Id)
-          .subscribe((vinculacion: any) => { 
+          .subscribe((vinculacion: any) => {
             if (vinculacion["Data"] != "") {
               this.request.get(environment.OIKOS_SERVICE, `dependencia_tipo_dependencia?query=DependenciaId:` + vinculacion["Data"]["DependenciaId"]).subscribe((dataUnidad: any) => {
                 if (dataUnidad) {
@@ -466,7 +467,7 @@ export class EvaluacionComponent implements OnInit {
       } else if (this.avanceTr1) {
         actividadValor = Math.round((actividad.trimestre1.actividad * 100) * 100) / 100
       }
-      actividades.push({name: actividad.actividad, value: actividadValor})
+      actividades.push({ name: actividad.actividad, value: actividadValor })
     }
     this.barChartData = actividades;
   }
@@ -484,8 +485,8 @@ export class EvaluacionComponent implements OnInit {
     }
 
     this.pieChartData = [
-      {"name": "Avance", "value": avance * 100},
-      {"name": "Restante","value": 100 - avance * 100}
+      { "name": "Avance", "value": avance * 100 },
+      { "name": "Restante", "value": 100 - avance * 100 }
     ];
   }
 }
