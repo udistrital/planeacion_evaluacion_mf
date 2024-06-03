@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 b {
-  color: var(--primary)
+  color: #731514 !important
 }
 
 table {
@@ -56,7 +56,7 @@ table tbody tr td:nth-child(n + 2) {
 }
 
 mat-label {
-  color: var(--primary);
+  color: #731514 !important;
 }
 
 
@@ -72,11 +72,11 @@ mat-label {
 }
 
 .swal2-styled.swal2-confirm {
-  background-color: var(--primary) !important;
+  background-color: #731514 !important;
 }
 
 .swal2-loader {
-  border-color: var(--primary) transparent var(--primary) transparent !important;
+  border-color: #731514  transparent #731514 transparent !important;
 }
 
 

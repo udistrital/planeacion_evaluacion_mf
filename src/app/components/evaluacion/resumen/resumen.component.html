@@ -1,0 +1,37 @@
+<div
+  style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  "
+  *ngIf="mostrarGrafica"
+>
+<ngx-charts-bar-vertical
+  [view]="view"
+  [results]="lineChartData"
+  [scheme]="colorScheme"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [showXAxisLabel]="showXAxisLabel"
+  [xAxisLabel]="xAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [yAxisLabel]="yAxisLabel"
+  [yScaleMax]="100"
+  [roundEdges]="roundEdges"
+  [showDataLabel]="showDataLabel"
+  [animations]="animations">
+</ngx-charts-bar-vertical>
+
+</div>
+
+<br>
+<mat-card-title *ngIf="mostrarTabla">
+  Reporte avance promedio del plan: {{ plan.nombre.toUpperCase() }}
+</mat-card-title>
+<br>
+<app-tabla-resumen-evaluacion
+  *ngIf="mostrarTabla"
+  [dataSource]="infoTabla"
+  style="width: 100%"
+></app-tabla-resumen-evaluacion>
