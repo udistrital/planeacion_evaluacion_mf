@@ -352,10 +352,7 @@
         actividad</th>
       <td mat-cell [style.display]="tr3 ? '' : 'none'" *matCellDef="let row; let i = index"
         [attr.rowspan]="getRowSpan('actividadt3',i)" [ngClass]="row.class"
-        [style.display]="getRowSpan('actividadt3', i) && tr3 ? '' : 'none'"
-        [ngStyle]="{
-          'background-color': getBackgroundColor(row.trimestre3.actividad)
-        }">
+        [style.display]="getRowSpan('actividadt3', i) && tr3 ? '' : 'none'">
         <div *ngIf="row.trimestre3.actividad <= 1; else elseBlock">
           {{row.trimestre3.actividad | percent:'1.2-2':'es'}}
         </div>
