@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { MatTable } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { UserService } from '../../services/userService';
-import { ImplicitAutenticationService } from '../../services/implicit_autentication.service';
+import { ImplicitAutenticationService } from '@udistrital/planeacion-utilidades-module';
 import { Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
@@ -63,13 +63,32 @@ export class EvaluacionComponent implements OnInit {
 
   spans: { [key: string]: number }[] = [];
 
+  // Opciones para gráfico "pie chart"
+  pieTitle = 'Cumplimiento general Plan de Acción -';
+  pieChartData = [{ name: '', value: 75 }, { name: '', value: 25 }];
+  pieChartColor: Color = {
+    name: 'customScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#3366CC', '#e1e4eb']
+  };
+
+  // Opciones para gráfico "vertical bar chart"
+  barChartData = [{ name: '', value: 0 }];
+  barChartColor: Color = {
+    name: 'customScheme',
+    selectable: true,
+    group: ScaleType.Ordinal,
+    domain: ['#8F1B00']
+  };
 
   @ViewChild(MatTable) table!: MatTable<any>;
 
+  private autenticationService = new ImplicitAutenticationService();
+
   constructor(
-    private request: RequestManager,  
-    private autenticationService: ImplicitAutenticationService, 
-    private userService: UserService, 
+    private request: RequestManager,
+    private userService: UserService,
     private router: Router
   ) {
     this.loadVigencias();
@@ -168,7 +187,7 @@ export class EvaluacionComponent implements OnInit {
   }
 
   getRol() {
-    let roles: any = this.autenticationService.getRole();
+    let roles: any = this.autenticationService.getRoles();
     if (roles.__zone_symbol__value.find((x: string) => x == 'JEFE_DEPENDENCIA' || x == 'ASISTENTE_DEPENDENCIA')) {
       this.rol = 'JEFE_DEPENDENCIA';
       this.validarUnidad();
@@ -387,5 +406,84 @@ export class EvaluacionComponent implements OnInit {
   }
   backClicked() {
     this.router.navigate(['#/pages/dashboard']);
+  }
+
+  getRowSpan(col: any, index: any) {
+    return this.spans[index] && this.spans[index][col];
+  }
+
+  calcularAvanceGeneral() {
+    let numero = 0;
+    this.avanceTr1 = 0;
+    this.avanceTr2 = 0;
+    this.avanceTr3 = 0;
+    this.avanceTr4 = 0;
+
+    for (let index = 0; index < this.actividades.length; index++) {
+      const actividad = this.actividades[index];
+      if (numero != actividad.numero) {
+        numero = actividad.numero;
+      } else {
+        continue;
+      }
+
+      if (actividad.trimestre1.actividad) {
+        this.avanceTr1 += actividad.ponderado / 100 * (actividad.trimestre1.actividad <= 1 ? actividad.trimestre1.actividad : 1);
+      }
+      if (actividad.trimestre2.actividad) {
+        this.avanceTr2 += actividad.ponderado / 100 * (actividad.trimestre2.actividad <= 1 ? actividad.trimestre2.actividad : 1);
+      }
+      if (actividad.trimestre3.actividad) {
+        this.avanceTr3 += actividad.ponderado / 100 * (actividad.trimestre3.actividad <= 1 ? actividad.trimestre3.actividad : 1);
+      }
+      if (actividad.trimestre4.actividad) {
+        this.avanceTr4 += actividad.ponderado / 100 * (actividad.trimestre4.actividad <= 1 ? actividad.trimestre4.actividad : 1);
+      }
+    }
+  }
+
+  graficarBarras() {
+    let numero = 0;
+    let actividades: any[] = [];
+
+    for (let index = 0; index < this.actividades.length; index++) {
+      const actividad = this.actividades[index];
+      if (numero != actividad.numero) {
+        numero = actividad.numero;
+      } else {
+        continue;
+      }
+
+      let actividadValor
+      if (this.avanceTr4) {
+        actividadValor = Math.round((actividad.trimestre4.actividad * 100) * 100) / 100
+      } else if (this.avanceTr3) {
+        actividadValor = Math.round((actividad.trimestre3.actividad * 100) * 100) / 100
+      } else if (this.avanceTr2) {
+        actividadValor = Math.round((actividad.trimestre2.actividad * 100) * 100) / 100
+      } else if (this.avanceTr1) {
+        actividadValor = Math.round((actividad.trimestre1.actividad * 100) * 100) / 100
+      }
+      actividades.push({ name: actividad.actividad, value: actividadValor })
+    }
+    this.barChartData = actividades;
+  }
+
+  graficarCircular() {
+    let avance = 0;
+    if (this.tr4) {
+      avance = this.avanceTr4;
+    } else if (this.tr3) {
+      avance = this.avanceTr3;
+    } else if (this.tr2) {
+      avance = this.avanceTr2;
+    } else {
+      avance = this.avanceTr1;
+    }
+
+    this.pieChartData = [
+      { "name": "Avance", "value": avance * 100 },
+      { "name": "Restante", "value": 100 - avance * 100 }
+    ];
   }
 }
