@@ -1,0 +1,26 @@
+<table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
+  <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+    <th mat-header-cell *matHeaderCellDef style="background: var(--primary);"> {{column}} </th>
+    <td mat-cell *matCellDef="let element" > {{element[equivalentesAColumnas[column]]}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="expandedDetail">
+    <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+      <div class="example-element-detail" [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+        <app-evaluacion-plan
+          *ngIf="element == expandedElement"
+          [plan]=" element.plan " [periodo]=" element.periodo " [idVigencia]=" element.idVigencia "
+          [nombreUnidad]=" element.nombreUnidad "
+          [mostrarGraficos]="false"
+          ></app-evaluacion-plan>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+  <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+    [class.example-expanded-row]="element  === expandedElement"
+    (click)="expandedElement = expandedElement === element ? null : element">
+  </tr>
+  <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>

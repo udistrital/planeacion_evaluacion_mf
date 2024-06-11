@@ -1,0 +1,55 @@
+table {
+  width: 100%;
+}
+
+th {
+  color: white;
+}
+
+td.mat-cell,
+
+th.mat-header-cell {
+  padding: 16px 10px;
+  background-color:#863028 ;
+}
+
+th.mat-column-Avance-Trimestre-1,
+th.mat-column-Avance-Trimestre-2,
+th.mat-column-Avance-Trimestre-3,
+th.mat-column-Avance-Trimestre-4,
+.mat-column-Avance-General {
+  width: 12.5%;
+}
+.mat-column-Unidad-Academico-Administrativa {
+  width: 37.5%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+.mat-row {
+  background-color: white;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #e7d6d6;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+td.mat-column-expandedDetail {
+  padding: 0px 0px 0px 0px;
+}
+
+.example-element-detail {
+  max-width: 94vw;
+  overflow: hidden;
+  // overflow-x: scroll;
+}
