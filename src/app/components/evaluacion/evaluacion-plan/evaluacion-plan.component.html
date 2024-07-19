@@ -139,16 +139,19 @@
     </ng-container>
     <ng-container matColumnDef="metat1">
       <th style="background: var(--color900);"  *matHeaderCellDef> Cumplimiento por meta </th>
-      <td mat-cell *matCellDef="let row" 
+      <td mat-cell *matCellDef="let row"
       [ngStyle]="{
         'background-color': getBackgroundColor(row.trimestre1.meta)
       }">
-        <div *ngIf="row.trimestre1.meta <= 1; else elseBlock">
+        <div *ngIf="row.trimestre1.meta <= 1">
           {{row.trimestre1.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre1.meta > 1">
           100% <br> (+{{row.trimestre1.meta - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre1.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" *matFooterCellDef></td>
     </ng-container>
@@ -158,7 +161,12 @@
         <div *ngIf="row.trimestre1.meta < 1; else elseBlock">
           {{ 1 - row.trimestre1.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>0%</ng-template>
+        <div *ngIf="row.trimestre1.meta >= 1">
+          0%
+        </div>
+        <div *ngIf="row.trimestre1.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" *matFooterCellDef></td>
     </ng-container>
@@ -166,18 +174,21 @@
     <ng-container matColumnDef="actividadt1">
       <th style="background: var(--color900);" *matHeaderCellDef> Cumplimiento por actividad</th>
       <td mat-cell *matCellDef="let row; let i = index" [attr.rowspan]="getRowSpan('actividadt1',i)"
-        [ngClass]="row.class" 
+        [ngClass]="row.class"
         [style.display]="getRowSpan('actividadt1', i) ? '' : 'none'">
-        <div *ngIf="row.trimestre1.actividad <= 1; else elseBlock">
+        <div *ngIf="row.trimestre1.actividad <= 1">
           {{row.trimestre1.actividad | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre1.actividad > 1">
           100% <br> (+{{row.trimestre1.actividad - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre1.actividad === undefined">
+          N/A
+        </div>
       </td>
       <td style="background: var(--primary);color: white;" mat-footer-cell *matFooterCellDef>{{avanceTr1 | percent:'1.2-2':'es'}}</td>
     </ng-container>
-    
+
     <!-- trimestre 2 -->
     <ng-container matColumnDef="numt2">
       <th [style.display]="tr2 ? '' : 'none'" style="background: var(--color800);"  *matHeaderCellDef> Numerador </th>
@@ -231,12 +242,15 @@
       [ngStyle]="{
         'background-color': getBackgroundColor(row.trimestre2.meta)
       }">
-        <div *ngIf="row.trimestre2.meta <= 1; else elseBlock">
+        <div *ngIf="row.trimestre2.meta <= 1">
           {{row.trimestre2.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre2.meta > 1">
           100% <br> (+{{row.trimestre2.meta - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre2.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" [style.display]="tr2 ? '' : 'none'" *matFooterCellDef></td>
     </ng-container>
@@ -244,10 +258,15 @@
     <ng-container matColumnDef="brecha2">
       <th [style.display]="tr2 ? '' : 'none'" style="background: var(--color800);"  *matHeaderCellDef> Brecha </th>
       <td mat-cell [style.display]="tr2 ? '' : 'none'" *matCellDef="let row" [ngClass]="row.class" style="min-width: 60px;">
-        <div *ngIf="row.trimestre2.meta < 1; else elseBlock">
+        <div *ngIf="row.trimestre2.meta < 1">
           {{ 1 - row.trimestre2.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>0%</ng-template>
+        <div *ngIf="row.trimestre2.meta >= 1">
+          0%
+        </div>
+        <div *ngIf="row.trimestre2.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" [style.display]="tr2 ? '' : 'none'" *matFooterCellDef></td>
     </ng-container>
@@ -262,12 +281,15 @@
         [ngStyle]="{
           'background-color': getBackgroundColor(row.trimestre2.actividad)
         }">
-        <div *ngIf="row.trimestre2.actividad <= 1; else elseBlock">
+        <div *ngIf="row.trimestre2.actividad <= 1">
           {{row.trimestre2.actividad | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre2.actividad > 1">
           100% <br> (+{{row.trimestre2.actividad - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre2.actividad === undefined">
+          N/A
+        </div>
       </td>
       <td style="background: var(--primary);color: white;" mat-footer-cell [style.display]="tr2 ? '' : 'none'" *matFooterCellDef>{{avanceTr2 |
         percent:'1.2-2':'es'}}
@@ -323,16 +345,19 @@
     </ng-container>
     <ng-container matColumnDef="metat3">
       <th style="background: var(--color700);" [style.display]="tr3 ? '' : 'none'" *matHeaderCellDef> Cumplimiento por meta </th>
-      <td mat-cell [style.display]="tr3 ? '' : 'none'" *matCellDef="let row" 
+      <td mat-cell [style.display]="tr3 ? '' : 'none'" *matCellDef="let row"
       [ngStyle]="{
         'background-color': getBackgroundColor(row.trimestre3.meta)
       }">
-        <div *ngIf="row.trimestre3.meta <= 1; else elseBlock">
+        <div *ngIf="row.trimestre3.meta <= 1">
           {{row.trimestre3.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre3.meta > 1">
           100% <br> (+{{row.trimestre3.meta - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre1.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" [style.display]="tr3 ? '' : 'none'" *matFooterCellDef></td>
     </ng-container>
@@ -343,7 +368,12 @@
         <div *ngIf="row.trimestre3.meta < 1; else elseBlock">
           {{ 1 - row.trimestre3.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>0%</ng-template>
+        <div *ngIf="row.trimestre3.meta >= 1">
+          0%
+        </div>
+        <div *ngIf="row.trimestre3.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" [style.display]="tr3 ? '' : 'none'" *matFooterCellDef></td>
     </ng-container>
@@ -355,12 +385,15 @@
       <td mat-cell [style.display]="tr3 ? '' : 'none'" *matCellDef="let row; let i = index"
         [attr.rowspan]="getRowSpan('actividadt3',i)" [ngClass]="row.class"
         [style.display]="getRowSpan('actividadt3', i) && tr3 ? '' : 'none'">
-        <div *ngIf="row.trimestre3.actividad <= 1; else elseBlock">
+        <div *ngIf="row.trimestre3.actividad <= 1">
           {{row.trimestre3.actividad | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre3.actividad > 1">
           100% <br> (+{{row.trimestre3.actividad - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre1.meta === undefined">
+          N/A
+        </div>
       </td>
       <td style="background: var(--primary);color: white;" mat-footer-cell [style.display]="tr3 ? '' : 'none'" *matFooterCellDef>{{avanceTr3 |
         percent:'1.2-2':'es'}}
@@ -416,16 +449,19 @@
     </ng-container>
     <ng-container matColumnDef="metat4">
       <th style="background: var(--color600);" [style.display]="tr4 ? '' : 'none'" *matHeaderCellDef> Cumplimiento por meta </th>
-      <td mat-cell [style.display]="tr4 ? '' : 'none'" *matCellDef="let row" 
+      <td mat-cell [style.display]="tr4 ? '' : 'none'" *matCellDef="let row"
       [ngStyle]="{
         'background-color': getBackgroundColor(row.trimestre4.meta)
       }">
-        <div *ngIf="row.trimestre4.meta <= 1; else elseBlock">
+        <div *ngIf="row.trimestre4.meta <= 1">
           {{row.trimestre4.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre4.meta > 1">
           100% <br> (+{{row.trimestre4.meta - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre4.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" [style.display]="tr4 ? '' : 'none'" *matFooterCellDef></td>
     </ng-container>
@@ -436,7 +472,12 @@
         <div *ngIf="row.trimestre4.meta < 1; else elseBlock">
           {{ 1 - row.trimestre4.meta | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>0%</ng-template>
+        <div *ngIf="row.trimestre4.meta >= 1">
+          0%
+        </div>
+        <div *ngIf="row.trimestre4.meta === undefined">
+          N/A
+        </div>
       </td>
       <td mat-footer-cell style="background: var(--primary);color: white;" [style.display]="tr4 ? '' : 'none'" *matFooterCellDef></td>
     </ng-container>
@@ -450,12 +491,15 @@
         [ngStyle]="{
           'background-color': getBackgroundColor(row.trimestre4.actividad)
         }">
-        <div *ngIf="row.trimestre4.actividad <= 1; else elseBlock">
+        <div *ngIf="row.trimestre4.actividad <= 1">
           {{row.trimestre4.actividad | percent:'1.2-2':'es'}}
         </div>
-        <ng-template #elseBlock>
+        <div *ngIf="row.trimestre4.actividad > 1">
           100% <br> (+{{row.trimestre4.actividad - 1 | percent:'1.2-2':'es'}})
-        </ng-template>
+        </div>
+        <div *ngIf="row.trimestre4.actividad === undefined">
+          N/A
+        </div>
       </td>
       <td style="background: var(--primary);color: white;" mat-footer-cell style="background: var(--primary);" [style.display]="tr4 ? '' : 'none'" *matFooterCellDef>{{avanceTr4 |
         percent:'1.2-2':'es'}}
