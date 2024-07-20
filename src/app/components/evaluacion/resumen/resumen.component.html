@@ -6,22 +6,28 @@
     width: 100%;
   "
   *ngIf="mostrarGrafica"
+  class="charts-container"
 >
-<ngx-charts-bar-vertical
-  [view]="view"
-  [results]="lineChartData"
-  [scheme]="colorScheme"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [showXAxisLabel]="showXAxisLabel"
-  [xAxisLabel]="xAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [yAxisLabel]="yAxisLabel"
-  [yScaleMax]="100"
-  [roundEdges]="roundEdges"
-  [showDataLabel]="showDataLabel"
-  [animations]="animations">
-</ngx-charts-bar-vertical>
+  <ngx-charts-bar-vertical
+    [view]="view"
+    [results]="lineChartData"
+    [scheme]="colorScheme"
+    [xAxis]="showXAxis"
+    [yAxis]="showYAxis"
+    [showXAxisLabel]="showXAxisLabel"
+    [xAxisLabel]="xAxisLabel"
+    [showYAxisLabel]="showYAxisLabel"
+    [yAxisLabel]="yAxisLabel"
+    [yScaleMax]="100"
+    [roundEdges]="roundEdges"
+    [showDataLabel]="showDataLabel"
+    [animations]="animations">
+  </ngx-charts-bar-vertical>
+  <div class="small-content" style="width: 20%;height: 100%;">
+    <mat-card-title>Nivel de avance</mat-card-title>
+    <p>El nivel de avance se marca con un color de acuerdo con los siguientes intervalos:</p>
+    <img src="assets/images/colores-avance-porcentaje.png">
+  </div>
 
 </div>
 

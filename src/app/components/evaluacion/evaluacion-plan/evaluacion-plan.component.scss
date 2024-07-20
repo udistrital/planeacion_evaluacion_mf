@@ -7,9 +7,11 @@ th {
   color: white;
   text-align: center;
 }
+
 td {
   text-align: center;
 }
+
 .table-responsive {
   display: block;
   width: 100%;
@@ -81,7 +83,7 @@ th.mat-header-cell {
 
 .header2 {
   background-color: var(--color900);
-  
+
 }
 
 .header3 {
@@ -139,11 +141,47 @@ th.mat-header-cell {
 }
 
 .pie-chart-titulo {
-  font-size: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #731514;
   width: 70%;
   margin: 0 auto;
 }
 
 .bar-chart {
-  width: 50%;
+  width: 60%;
+}
+
+.charts-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  height: 100%;
+}
+
+.chart {
+  height: 100%;
+}
+
+.pie-chart {
+  width: 20%;
+}
+
+.line-chart {
+  width: 60%;
+}
+
+.small-content {
+  background-color: #FFF;
+  border-radius: 8px;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  padding: 32px;
+
+  mat-card-title {
+    font-size: 20px;
+    color: var(--primary);
+  }
 }

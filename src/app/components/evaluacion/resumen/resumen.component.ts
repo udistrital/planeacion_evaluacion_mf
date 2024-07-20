@@ -34,7 +34,7 @@ export class ResumenComponent implements OnInit {
   auxLineChartData: any[] = [];
 
   lineChartData: any[] = [];
-  
+
   colorScheme: Color = {
     name: 'custom',
     selectable: true,
@@ -47,7 +47,7 @@ export class ResumenComponent implements OnInit {
   mostrarTabla: boolean = false;
   mostrarGrafica: boolean = false;
 
-  constructor(private request: RequestManager) {}
+  constructor(private request: RequestManager) { }
 
   async ngOnInit() {
     if (this.periodo === 'TODOS') {
@@ -85,12 +85,12 @@ export class ResumenComponent implements OnInit {
       const unidad = this.unidades[index];
       await new Promise((resolve) => {
         this.request
-          .get(environment.PLANEACION_EVALUACION_MID,`planes-periodo/${this.idVigencia}/${unidad.Id}`
+          .get(environment.PLANEACION_EVALUACION_MID, `planes-periodo/${this.idVigencia}/${unidad.Id}`
           )
           .subscribe((data: any) => {
-            if (data?.data) {
-              for (let pos = 0; pos < data.data.length; pos++) {
-                const elemento = data.data[pos];
+            if (data?.Data) {
+              for (let pos = 0; pos < data.Data.length; pos++) {
+                const elemento = data.Data[pos];
                 if (elemento['plan'] === this.plan.nombre) {
                   elemento['periodos'].forEach((periodo: any) => {
                     if (
@@ -117,10 +117,10 @@ export class ResumenComponent implements OnInit {
         .get(environment.PLANEACION_EVALUACION_MID, `avance/${this.plan.nombre}/${this.idVigencia}/${unidad.Id}`)
         .subscribe(
           (data: any) => {
-            if (data && data.data && data.data.Trimestres) {
+            if (data && data.Data && data.Data.Trimestres) {
               let auxDataBarra: any = {
                 name: unidad.Nombre,
-                value: data.data.Promedio,
+                value: data.Data.Promedio,
                 extra: {
                   color: ''
                 }
@@ -129,16 +129,16 @@ export class ResumenComponent implements OnInit {
               let avance;
               switch (this.periodo.nombre) {
                 case 'Trimestre uno':
-                  avance = data.data.Trimestres['1'];
+                  avance = data.Data.Trimestres['1'];
                   break;
                 case 'Trimestre dos':
-                  avance = data.data.Trimestres['2'];
+                  avance = data.Data.Trimestres['2'];
                   break;
                 case 'Trimestre tres':
-                  avance = data.data.Trimestres['3'];
+                  avance = data.Data.Trimestres['3'];
                   break;
                 case 'Trimestre cuatro':
-                  avance = data.data.Trimestres['4'];
+                  avance = data.Data.Trimestres['4'];
                   break;
                 default:
                   break;
@@ -192,19 +192,19 @@ export class ResumenComponent implements OnInit {
   async obtenerDatosUnidad(unidad: { Id: string; Nombre: string }) {
     await new Promise((resolve, reject) => {
       this.request
-        .get(environment.PLANEACION_EVALUACION_MID,`avance/${this.plan.nombre}/${this.idVigencia}/${unidad.Id}`)
+        .get(environment.PLANEACION_EVALUACION_MID, `avance/${this.plan.nombre}/${this.idVigencia}/${unidad.Id}`)
         .subscribe(
           (data: any) => {
             if (data) {
               let auxDataBarra: any = {
                 name: unidad.Nombre,
-                value: data.data.Promedio,
+                value: data.Data.Promedio,
                 extra: {
                   color: ''
                 }
               };
 
-              let avanceGeneral = data.data.Promedio;
+              let avanceGeneral = data.Data.Promedio;
               if (avanceGeneral <= 20) {
                 auxDataBarra.extra.color = '#c50820';
               } else if (avanceGeneral > 20 && avanceGeneral <= 40) {
@@ -219,13 +219,13 @@ export class ResumenComponent implements OnInit {
 
               this.infoTabla.push({
                 idVigencia: this.idVigencia,
-                plan: data.data.plan,
-                periodo: data.data.periodo,
+                plan: data.Data.plan,
+                periodo: data.Data.periodo,
                 nombreUnidad: unidad.Nombre,
-                avanceTr1: data.data.Trimestres['1'],
-                avanceTr2: data.data.Trimestres['2'],
-                avanceTr3: data.data.Trimestres['3'],
-                avanceTr4: data.data.Trimestres['4'],
+                avanceTr1: data.Data.Trimestres['1'],
+                avanceTr2: data.Data.Trimestres['2'],
+                avanceTr3: data.Data.Trimestres['3'],
+                avanceTr4: data.Data.Trimestres['4'],
                 avanceGeneral,
               });
               this.auxLineChartData.push(auxDataBarra);
@@ -271,6 +271,6 @@ export class ResumenComponent implements OnInit {
     Swal.close();
     if (this.auxLineChartData.length > 0) {
       this.lineChartData = this.auxLineChartData;
-  } 
+    }
   }
 }

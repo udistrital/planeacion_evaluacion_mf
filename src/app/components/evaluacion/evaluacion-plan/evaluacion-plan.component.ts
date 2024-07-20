@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { RequestManager } from '../../../services/requestManager';
 import { MatTable } from '@angular/material/table';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { assetUrl } from 'src/single-spa/asset-url';
 
 
 type Dato = { id: string; nombre: string };
@@ -21,7 +22,9 @@ export class EvaluacionPlanComponent implements OnInit {
   @Input() nombreUnidad!: string;
   @Input() mostrarGraficos!: boolean;
 
-  pieTitle = 'Cumplimiento general Plan de Acción -';
+  coloresPngUrl = assetUrl("images/colores-avance-porcentaje.png");
+
+  pieTitle = 'Cumplimiento general';
   showXAxisLabel = true;
   showYAxisLabel = this.nombreUnidad;
   xAxisLabel = 'Actividad';
@@ -31,7 +34,7 @@ export class EvaluacionPlanComponent implements OnInit {
     name: 'MyColorScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#8F1B00']
+    domain: []
   };
 
 
@@ -110,11 +113,10 @@ export class EvaluacionPlanComponent implements OnInit {
       .get(environment.PLANEACION_EVALUACION_MID, `${this.idVigencia}/${this.plan.id}/${this.periodo.id}`).subscribe(
         (data: any) => {
           if (data) {
-            this.actividades = data.data;
+            this.actividades = data.Data;
             this.actividades.forEach((actividad: any) => {
               actividad.class = actividad.numero % 2 == 0 ? 'claro' : 'oscuro';
             });
-            this.pieTitle = `Cumplimiento general ${this.plan.nombre} - ${this.nombreUnidad}`;
             this.cacheSpan('numero', (d: any) => d.numero);
             this.cacheSpan('ponderado', (d: any) => d.numero + d.ponderado);
             this.cacheSpan(
@@ -302,6 +304,19 @@ export class EvaluacionPlanComponent implements OnInit {
           Math.round(actividad.trimestre1.actividad * 100 * 100) / 100;
       }
 
+      // Colores barras según porcentaje
+      if (actividadValor <= 20) {
+        this.colorScheme.domain.push('#c50820');
+      } else if (actividadValor > 20 && actividadValor <= 40) {
+        this.colorScheme.domain.push('#faa99c');
+      } else if (actividadValor > 40 && actividadValor <= 60) {
+        this.colorScheme.domain.push('#fac11d');
+      } else if (actividadValor > 60 && actividadValor <= 80) {
+        this.colorScheme.domain.push('#fdff21');
+      } else {
+        this.colorScheme.domain.push('#73af49');
+      }
+
       actividades.push({
         name: actividad.actividad,
         value: actividadValor
@@ -333,7 +348,7 @@ export class EvaluacionPlanComponent implements OnInit {
   }
 
   getBackgroundColor(actividad: number): string {
-    if (actividad > 0 && actividad < 0.2) {
+    if (actividad >= 0 && actividad <= 0.2) {
       return '#c71a1b';
     } else if (actividad >= 0.201 && actividad <= 0.40) {
       return '#ffa99e'; // color piel
