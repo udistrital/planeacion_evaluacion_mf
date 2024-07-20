@@ -5,7 +5,6 @@
 export function assetUrl(url: string): string {
   // @ts-ignore
   const publicPath = "https://pruebaspsisgplanevaluacionmf.portaloas.udistrital.edu.co/";
-  console.log(publicPath);
   const publicPathSuffix = publicPath.endsWith('/') ? '' : '/';
   const urlPrefix = url.startsWith('/') ? '' : '/';
 
