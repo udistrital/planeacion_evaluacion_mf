@@ -1,31 +1,39 @@
 <div *ngIf="mostrarGraficos" style="display: flex; justify-content: space-between; align-items: center;">
-<div class="graficos">
-  <div class="pie-chart">
-    <p class="pie-chart-titulo">{{pieTitle}}</p>
-    <ngx-charts-pie-chart
-      [scheme]="colorSchemecircular"
-      [results]="pieChartData"
-      [doughnut]="true"
-      [arcWidth]=0.5>
-    </ngx-charts-pie-chart>
+  <div class="graficos" class="charts-container">
+    <div class="pie-chart">
+      <p class="pie-chart-titulo">{{pieTitle}}</p>
+      <ngx-charts-pie-chart
+        [scheme]="colorSchemecircular"
+        [results]="pieChartData"
+        [doughnut]="true"
+        [arcWidth]=0.5>
+      </ngx-charts-pie-chart>
+    </div>
+
+    <div class="bar-chart">
+      <ngx-charts-bar-vertical
+      [view]="[0,0]"
+      [scheme]="colorScheme"
+      [results]="lineChartData"
+      [showDataLabel] = "true"
+      [noBarWhenZero] = "false"
+      [xAxis]="true"
+      [yAxis]="true"
+      [showXAxisLabel]="true"
+      [showYAxisLabel]="true"
+      [xAxisLabel]="'Unidad'"
+      [yAxisLabel]="'Avance'"
+      [yScaleMin]="0"
+      [yScaleMax]="100">
+      </ngx-charts-bar-vertical>
+    </div>
+    <div class="small-content">
+      <mat-card-title style="text-align: center;">Nivel de avance</mat-card-title>
+      <p>El nivel de avance se marca con un color de acuerdo con los siguientes intervalos:</p>
+      <img [src]="coloresPngUrl"/>
+    </div>
   </div>
 
-  <div class="bar-chart">
-    <ngx-charts-bar-vertical
-    [view]="[700, 400]"
-    [scheme]="colorScheme"
-    [results]="lineChartData"
-    [xAxis]="true"
-    [yAxis]="true"
-    [showXAxisLabel]="true"
-    [showYAxisLabel]="true"
-    [xAxisLabel]="'Unidad'"
-    [yAxisLabel]="'Avance'"
-    [yScaleMin]="0"
-    [yScaleMax]="100">
-    </ngx-charts-bar-vertical>
-  </div>
-</div>
 </div>
 
 
@@ -158,7 +166,7 @@
     <ng-container matColumnDef="brecha1">
       <th style="background: var(--color900);"  *matHeaderCellDef> Brecha </th>
       <td mat-cell *matCellDef="let row" [ngClass]="row.class" style="min-width: 60px;">
-        <div *ngIf="row.trimestre1.meta < 1; else elseBlock">
+        <div *ngIf="row.trimestre1.meta < 1">
           {{ 1 - row.trimestre1.meta | percent:'1.2-2':'es'}}
         </div>
         <div *ngIf="row.trimestre1.meta >= 1">
@@ -365,7 +373,7 @@
     <ng-container matColumnDef="brecha3">
       <th [style.display]="tr3 ? '' : 'none'" style="background: var(--color700);"  *matHeaderCellDef> Brecha </th>
       <td mat-cell [style.display]="tr3 ? '' : 'none'" *matCellDef="let row" [ngClass]="row.class" style="min-width: 60px;">
-        <div *ngIf="row.trimestre3.meta < 1; else elseBlock">
+        <div *ngIf="row.trimestre3.meta < 1">
           {{ 1 - row.trimestre3.meta | percent:'1.2-2':'es'}}
         </div>
         <div *ngIf="row.trimestre3.meta >= 1">
@@ -469,7 +477,7 @@
     <ng-container matColumnDef="brecha4">
       <th style="background: var(--color600);" [style.display]="tr4 ? '' : 'none'" *matHeaderCellDef> Brecha </th>
       <td mat-cell [style.display]="tr4 ? '' : 'none'" *matCellDef="let row" [ngClass]="row.class" style="min-width: 60px;">
-        <div *ngIf="row.trimestre4.meta < 1; else elseBlock">
+        <div *ngIf="row.trimestre4.meta < 1">
           {{ 1 - row.trimestre4.meta | percent:'1.2-2':'es'}}
         </div>
         <div *ngIf="row.trimestre4.meta >= 1">
