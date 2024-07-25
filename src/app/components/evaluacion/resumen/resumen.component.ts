@@ -77,6 +77,7 @@ export class ResumenComponent implements OnInit {
       title: 'Cargando Periodos',
       timerProgressBar: true,
       showConfirmButton: false,
+      allowOutsideClick: false,
       willOpen: () => {
         Swal.showLoading();
       },
@@ -172,7 +173,7 @@ export class ResumenComponent implements OnInit {
             Swal.close();
             Swal.fire({
               title: 'Error al obtener los datos',
-              text: `No se encontró el avance de la Unidad`,
+              text: `No se encontró el avance de la Unidad ${unidad.Nombre}`,
               icon: 'warning',
               showConfirmButton: false,
               timer: 2500,
