@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import { RequestManager } from '../../../services/requestManager';
 import { MatTable } from '@angular/material/table';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { assetUrl } from 'src/single-spa/asset-url';
 
 
 type Dato = { id: string; nombre: string };
@@ -21,7 +22,9 @@ export class EvaluacionPlanComponent implements OnInit {
   @Input() nombreUnidad!: string;
   @Input() mostrarGraficos!: boolean;
 
-  pieTitle = 'Cumplimiento general Plan de Acción -';
+  coloresPngUrl = assetUrl("images/colores-avance-porcentaje.png");
+
+  pieTitle = 'Cumplimiento general';
   showXAxisLabel = true;
   showYAxisLabel = this.nombreUnidad;
   xAxisLabel = 'Actividad';
@@ -31,7 +34,7 @@ export class EvaluacionPlanComponent implements OnInit {
     name: 'MyColorScheme',
     selectable: true,
     group: ScaleType.Ordinal,
-    domain: ['#8F1B00']
+    domain: []
   };
 
 
@@ -83,7 +86,7 @@ export class EvaluacionPlanComponent implements OnInit {
 
   @ViewChild(MatTable) table!: NewType;
 
-  constructor(private request: RequestManager) {}
+  constructor(private request: RequestManager) { }
 
   ngAfterViewChecked(): void {
     if (this.table) {
@@ -100,6 +103,7 @@ export class EvaluacionPlanComponent implements OnInit {
       title: 'Cargando información',
       timerProgressBar: true,
       showConfirmButton: false,
+      allowOutsideClick: false,
       willOpen: () => {
         Swal.showLoading();
       },
@@ -107,32 +111,31 @@ export class EvaluacionPlanComponent implements OnInit {
     this.actividades = [];
     this.spans = [];
     this.request
-      .get(environment.PLANEACION_EVALUACION_MID,`${this.idVigencia}/${this.plan.id}/${this.periodo.id}`).subscribe(
+      .get(environment.PLANEACION_EVALUACION_MID, `${this.idVigencia}/${this.plan.id}/${this.periodo.id}`).subscribe(
         (data: any) => {
           if (data) {
-            this.actividades = data.data;
-            this.actividades.forEach((actividad:any) => {
+            this.actividades = data.Data;
+            this.actividades.forEach((actividad: any) => {
               actividad.class = actividad.numero % 2 == 0 ? 'claro' : 'oscuro';
             });
-            this.pieTitle = `Cumplimiento general ${this.plan.nombre} - ${this.nombreUnidad}`;
-            this.cacheSpan('numero', (d:any) => d.numero);
-            this.cacheSpan('ponderado', (d:any) => d.numero + d.ponderado);
+            this.cacheSpan('numero', (d: any) => d.numero);
+            this.cacheSpan('ponderado', (d: any) => d.numero + d.ponderado);
             this.cacheSpan(
               'periodo',
-              (d:any) => d.numero + d.ponderado + d.periodo
+              (d: any) => d.numero + d.ponderado + d.periodo
             );
             this.cacheSpan(
               'actividad',
-              (d:any) => d.numero + d.ponderado + d.periodo + d.actividad
+              (d: any) => d.numero + d.ponderado + d.periodo + d.actividad
             );
             this.cacheSpan(
               'actividadt1',
-              (d:any) =>
+              (d: any) =>
                 d.numero + d.ponderado + d.periodo + d.actividad + d.actividadt1
             );
             this.cacheSpan(
               'actividadt2',
-              (d:any) =>
+              (d: any) =>
                 d.numero +
                 d.ponderado +
                 d.periodo +
@@ -142,7 +145,7 @@ export class EvaluacionPlanComponent implements OnInit {
             );
             this.cacheSpan(
               'actividadt3',
-              (d:any) =>
+              (d: any) =>
                 d.numero +
                 d.ponderado +
                 d.periodo +
@@ -153,7 +156,7 @@ export class EvaluacionPlanComponent implements OnInit {
             );
             this.cacheSpan(
               'actividadt4',
-              (d:any) =>
+              (d: any) =>
                 d.numero +
                 d.ponderado +
                 d.periodo +
@@ -201,8 +204,8 @@ export class EvaluacionPlanComponent implements OnInit {
       );
   }
 
-  cacheSpan(key:any, accessor:any) {
-    for (let i = 0; i < this.actividades.length; ) {
+  cacheSpan(key: any, accessor: any) {
+    for (let i = 0; i < this.actividades.length;) {
       let currentValue = accessor(this.actividades[i]);
       let count = 1;
 
@@ -222,7 +225,7 @@ export class EvaluacionPlanComponent implements OnInit {
     }
   }
 
-  getRowSpan(col: any, index:any) {
+  getRowSpan(col: any, index: any) {
     return this.spans[index] && this.spans[index][col];
   }
 
@@ -302,6 +305,19 @@ export class EvaluacionPlanComponent implements OnInit {
           Math.round(actividad.trimestre1.actividad * 100 * 100) / 100;
       }
 
+      // Colores barras según porcentaje
+      if (actividadValor <= 20) {
+        this.colorScheme.domain.push('#c50820');
+      } else if (actividadValor > 20 && actividadValor <= 40) {
+        this.colorScheme.domain.push('#faa99c');
+      } else if (actividadValor > 40 && actividadValor <= 60) {
+        this.colorScheme.domain.push('#fac11d');
+      } else if (actividadValor > 60 && actividadValor <= 80) {
+        this.colorScheme.domain.push('#fdff21');
+      } else {
+        this.colorScheme.domain.push('#73af49');
+      }
+
       actividades.push({
         name: actividad.actividad,
         value: actividadValor
@@ -333,18 +349,18 @@ export class EvaluacionPlanComponent implements OnInit {
   }
 
   getBackgroundColor(actividad: number): string {
-    if (actividad > 0 && actividad < 0.2) {
+    if (actividad >= 0 && actividad <= 0.2) {
       return '#c71a1b';
-    } else if (actividad >= 0.21 && actividad <= 0.40) {
+    } else if (actividad >= 0.201 && actividad <= 0.40) {
       return '#ffa99e'; // color piel
-    } else if (actividad >= 0.41 && actividad <= 0.60) {
+    } else if (actividad >= 0.401 && actividad <= 0.60) {
       return '#fdc100';
-    } else if (actividad >= 0.61 && actividad <= 0.80) {
+    } else if (actividad >= 0.601 && actividad <= 0.80) {
       return '#fffe00';
-    } else if (actividad >= 0.81 && actividad <= 1.01) {
+    } else if (actividad >= 0.801) {
       return '#72ac41';
     } else {
-      return ''; // default or no color
+      return 'transparent'; // default or no color
     }
   }
 
