@@ -245,35 +245,19 @@ export class EvaluacionPlanComponent implements OnInit {
       }
 
       if (actividad.trimestre1.actividad) {
-        this.avanceTr1 +=
-          (actividad.ponderado / 100) *
-          (actividad.trimestre1.actividad <= 1
-            ? actividad.trimestre1.actividad
-            : 1);
+        this.avanceTr1 += (actividad.ponderado / 100) * (actividad.trimestre1.actividad <= 1 ? actividad.trimestre1.actividad : 1);
       }
 
       if (actividad.trimestre2.actividad) {
-        this.avanceTr2 +=
-          (actividad.ponderado / 100) *
-          (actividad.trimestre2.actividad <= 1
-            ? actividad.trimestre2.actividad
-            : 1);
+        this.avanceTr2 += (actividad.ponderado / 100) * (actividad.trimestre2.actividad <= 1 ? actividad.trimestre2.actividad : 1);
       }
 
       if (actividad.trimestre3.actividad) {
-        this.avanceTr3 +=
-          (actividad.ponderado / 100) *
-          (actividad.trimestre3.actividad <= 1
-            ? actividad.trimestre3.actividad
-            : 1);
+        this.avanceTr3 += (actividad.ponderado / 100) * (actividad.trimestre3.actividad <= 1 ? actividad.trimestre3.actividad : 1);
       }
 
       if (actividad.trimestre4.actividad) {
-        this.avanceTr4 +=
-          (actividad.ponderado / 100) *
-          (actividad.trimestre4.actividad <= 1
-            ? actividad.trimestre4.actividad
-            : 1);
+        this.avanceTr4 += (actividad.ponderado / 100) * (actividad.trimestre4.actividad <= 1 ? actividad.trimestre4.actividad : 1);
       }
     }
   }
