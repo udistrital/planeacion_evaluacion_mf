@@ -167,7 +167,7 @@
       <th style="background: var(--color900);"  *matHeaderCellDef> Brecha </th>
       <td mat-cell *matCellDef="let row" [ngClass]="row.class" style="min-width: 60px;">
         <div *ngIf="row.trimestre1.meta < 1">
-          {{ (row.meta/100) - row.trimestre1.meta | percent:'1.2-2':'es'}}
+          {{ 1 - row.trimestre1.meta | percent:'1.2-2':'es'}}
         </div>
         <div *ngIf="row.trimestre1.meta >= 1">
           0%
