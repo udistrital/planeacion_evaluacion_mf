@@ -14,7 +14,8 @@ export const environment = {
   //SERVICES PLANEACIÓN
   // PLANES_CRUD: 'http://localhost:8080/',
   //PLANES_MID: 'http://localhost:8080/v1/',
-  PLANEACION_EVALUACION_MID: 'http://localhost:8082/v1/',
+  PLANEACION_EVALUACION_MID: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/planeacion_evaluacion_mid/v1/',
+  PLANEACION_FORMULACION_MID: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/planeacion_formulacion_mid/v1/',
   // PLANEACION_EVALUACION_MID: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/evaluacion_mid/v1/',
   PLANES_MID_AUTH: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/planeacion_mid/v1/',
   PLANES_CRUD: 'https://autenticacion.portaloas.udistrital.edu.co/apioas/planes_crud/',

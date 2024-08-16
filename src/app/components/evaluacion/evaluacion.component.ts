@@ -91,6 +91,7 @@ export class EvaluacionComponent implements OnInit {
     private userService: UserService,
     private router: Router
   ) {
+    this.loadPlanes();
     this.loadVigencias();
     this.unidadSelected = false;
     this.vigenciaSelected = false;
@@ -193,43 +194,70 @@ export class EvaluacionComponent implements OnInit {
       this.validarUnidad();
     } else if (roles.__zone_symbol__value.find((x: string) => x == 'PLANEACION')) {
       this.rol = 'PLANEACION';
-      this.loadPlanes();
 
     }
   }
-  validarUnidad() {
-    this.userService.user$.subscribe((data: any) => {
-      this.request.get(environment.TERCEROS_SERVICE, `datos_identificacion/?query=Numero:` + data['userService']['documento'])
-        .subscribe((datosInfoTercero: any) => {
-          this.request.get(environment.PLANES_MID, `formulacion/vinculacion_tercero/` + datosInfoTercero[0].TerceroId.Id)
-            .subscribe((vinculacion: any) => {
-              if (vinculacion["Data"] != "") {
-                this.request.get(environment.OIKOS_SERVICE, `dependencia_tipo_dependencia?query=DependenciaId:` + vinculacion["Data"]["DependenciaId"]).subscribe((dataUnidad: any) => {
-                  if (dataUnidad) {
-                    let unidad = dataUnidad[0]["DependenciaId"]
-                    unidad["TipoDependencia"] = dataUnidad[0]["TipoDependenciaId"]["Id"]
-                    for (let i = 0; i < dataUnidad.length; i++) {
-                      if (dataUnidad[i]["TipoDependenciaId"]["Id"] === 2) {
-                        unidad["TipoDependencia"] = dataUnidad[i]["TipoDependenciaId"]["Id"]
-                      }
-                    }
-                    this.unidades = [unidad];
-                    Swal.close();
+  async validarUnidad() {
+    return await new Promise<any>((resolve, reject) => {
+      this.autenticationService.getDocumento().then((documento: any) => {
+        this.request
+          .get(
+            environment.TERCEROS_SERVICE,
+            `datos_identificacion/?query=Numero:${documento}`
+          )
+          .subscribe((datosInfoTercero: any[]) => {
+            this.request
+              .get(
+                environment.PLANEACION_FORMULACION_MID,
+                `formulacion/tercero/${datosInfoTercero[0].TerceroId.Id}`
+              )
+              .subscribe(async (vinculacion: any) => {
+                if (vinculacion.Data != null) {
+                  const vinculaciones: any[] = vinculacion.Data;
+                  for (let aux = 0; aux < vinculaciones.length; aux++) {
+                    const vinculacion = vinculaciones[aux];
+                    await new Promise<any[]>((resolve, reject) => {
+                      this.request
+                        .get(
+                          environment.OIKOS_SERVICE,
+                          `dependencia_tipo_dependencia?query=DependenciaId:${vinculacion.DependenciaId}`
+                        )
+                        .subscribe((dataUnidad: any[]) => {
+                          if (dataUnidad) {
+                            let unidad = dataUnidad[0].DependenciaId;
+                            unidad.TipoDependencia =
+                              dataUnidad[0].TipoDependenciaId.Id;
+                            for (let i = 0; i < dataUnidad.length; i++) {
+                              if (dataUnidad[i].TipoDependenciaId.Id === 2) {
+                                unidad.TipoDependencia =
+                                  dataUnidad[i].TipoDependenciaId.Id;
+                              }
+                            }
+                            if (!this.unidades.find((u) => u.Id === unidad.Id)) {
+                              this.unidades.push(unidad);
+                            }
+                            Swal.close()
+                            resolve(this.unidades)
+                          }
+                        });
+                    })
                   }
-                })
-              } else {
-                Swal.fire({
-                  title: 'Error en la operación',
-                  text: `No cuenta con los permisos requeridos para acceder a este módulo`,
-                  icon: 'warning',
-                  showConfirmButton: false,
-                  timer: 4000
-                })
-              }
-            })
-        })
-
-    })
+                  this.unidades = this.unidades.sort((a, b) => (a.Id < b.Id ? -1 : 1));
+                  resolve(this.unidades);
+                } else {
+                  Swal.fire({
+                    title: "Error en la operación",
+                    text: `No cuenta con los permisos requeridos para acceder a este módulo`,
+                    icon: "warning",
+                    showConfirmButton: false,
+                    timer: 4000,
+                  });
+                  reject();
+                }
+              });
+          });
+      });
+    });
   }
 
   ingresarEvaluacion() {
