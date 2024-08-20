@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { DataRequest } from 'src/app/@core/models/interfaces/DataRequest.interface';
 
 @Component({
   selector: 'app-evaluacion',
@@ -95,6 +96,9 @@ export class EvaluacionComponent implements OnInit {
     this.loadVigencias();
     this.unidadSelected = false;
     this.vigenciaSelected = false;
+    this.planSelected = false;
+    this.periodoSelected = false;
+    this.nombrePlanSeleccionado = "";
   }
 
   ngAfterViewChecked(): void {
@@ -178,6 +182,7 @@ export class EvaluacionComponent implements OnInit {
   }
 
   onChangePe(periodo: any) {
+    this.idPlanSeleccionado = periodo["plan_id"]
     this.bandera = false;
     if (periodo == undefined) {
       this.periodoSelected = false;
@@ -236,6 +241,7 @@ export class EvaluacionComponent implements OnInit {
                             if (!this.unidades.find((u) => u.Id === unidad.Id)) {
                               this.unidades.push(unidad);
                             }
+                            this.existenUnidades = true;
                             Swal.close()
                             resolve(this.unidades)
                           }
@@ -381,14 +387,13 @@ export class EvaluacionComponent implements OnInit {
         Swal.showLoading();
       },
     });
-    this.request.get(environment.PLANEACION_EVALUACION_MID, `planes-periodo/` + this.vigencia.Id + `/` + this.unidad.Id).subscribe((data: any) => {
+    this.request.get(environment.PLANEACION_EVALUACION_MID, `planes-periodo/` + this.vigencia.Id + `/` + this.unidad.Id).subscribe((data: DataRequest) => {
       if (data) {
         if (data.Data != null) {
           let periodosCargados = false;
           for (let pos = 0; pos < data.Data.length; pos++) {
             const elemento = data.Data[pos];
             if (elemento["plan"] === this.nombrePlanSeleccionado) {
-              this.idPlanSeleccionado = elemento["id"]
               this.periodos = elemento["periodos"]
               this.periodos.forEach((periodo) => {
                 periodo.nombre = periodo.nombre[0].toUpperCase() + periodo.nombre.substring(1).toLowerCase()
