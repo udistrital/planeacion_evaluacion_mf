@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { RequestManager } from '../../../services/requestManager';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
-import { UnaryOperator } from '@angular/compiler';
 import { Color, ScaleType } from '@swimlane/ngx-charts';
+import { assetUrl } from 'src/single-spa/asset-url';
 
 
 type Dato = { id: string; nombre: string };
@@ -19,6 +19,8 @@ export class ResumenComponent implements OnInit {
   @Input() unidades: any[] = [];
   @Input() periodo: any;
   unidadesConPeriodoSeleccionado: any[] = [];
+
+  coloresPngUrl = assetUrl("images/colores-avance-porcentaje.png");
 
   // Opciones para ngx-charts
   view = [700, 400] as [number, number];

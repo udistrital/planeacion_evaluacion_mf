@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 import { MatTable } from '@angular/material/table';
 import Swal from 'sweetalert2';
 import { UserService } from '../../services/userService';
-import { ImplicitAutenticationService } from '@udistrital/planeacion-utilidades-module';
+import { ImplicitAutenticationService, ServiceBase64 } from '@udistrital/planeacion-utilidades-module';
 import { Router } from '@angular/router';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
@@ -86,6 +86,7 @@ export class EvaluacionComponent implements OnInit {
   @ViewChild(MatTable) table!: MatTable<any>;
 
   private autenticationService = new ImplicitAutenticationService();
+  private codificarBase64 = new ServiceBase64();
 
   constructor(
     private request: RequestManager,
@@ -298,8 +299,9 @@ export class EvaluacionComponent implements OnInit {
         Swal.showLoading();
       },
     });
+    let planBase64 = this.codificarBase64.encodeBase64(this.nombrePlanSeleccionado);
     this.request
-      .get(environment.PLANEACION_EVALUACION_MID, `unidades/${this.nombrePlanSeleccionado}/${this.vigencia.Id}`)
+      .get(environment.PLANEACION_EVALUACION_MID, `unidades/${planBase64}/${this.vigencia.Id}`)
       .subscribe(
         (data: any) => {
           if (data) {
