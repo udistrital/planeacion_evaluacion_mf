@@ -52,34 +52,6 @@ export class EvaluacionComponent implements OnInit {
   existenUnidades = false;
   actividades: any
   rol: string = "";
-  plan: { periodos: { nombre: string }[], plan: string, id: string } = {
-    "periodos": [],
-    "plan": "",
-    "id": ""
-  };
-  avanceTr1 = 0;
-  avanceTr2 = 0;
-  avanceTr3 = 0;
-  avanceTr4 = 0;
-
-  spans: { [key: string]: number }[] = [];
-
-  // Opciones para gráfico "pie chart"
-  pieChartColor: Color = {
-    name: 'customScheme',
-    selectable: true,
-    group: ScaleType.Ordinal,
-    domain: ['#3366CC', '#e1e4eb']
-  };
-
-  // Opciones para gráfico "vertical bar chart"
-  barChartData = [{ name: '', value: 0 }];
-  barChartColor: Color = {
-    name: 'customScheme',
-    selectable: true,
-    group: ScaleType.Ordinal,
-    domain: ['#8F1B00']
-  };
 
   @ViewChild(MatTable) table!: MatTable<any>;
 
@@ -444,79 +416,5 @@ export class EvaluacionComponent implements OnInit {
   }
   backClicked() {
     this.router.navigate(['#/pages/dashboard']);
-  }
-
-  getRowSpan(col: any, index: any) {
-    return this.spans[index] && this.spans[index][col];
-  }
-
-  calcularAvanceGeneral() {
-    let numero = 0;
-    this.avanceTr1 = 0;
-    this.avanceTr2 = 0;
-    this.avanceTr3 = 0;
-    this.avanceTr4 = 0;
-
-    for (let index = 0; index < this.actividades.length; index++) {
-      const actividad = this.actividades[index];
-      if (numero != actividad.numero) {
-        numero = actividad.numero;
-      } else {
-        continue;
-      }
-
-      if (actividad.trimestre1.actividad) {
-        this.avanceTr1 += actividad.ponderado / 100 * (actividad.trimestre1.actividad <= 1 ? actividad.trimestre1.actividad : 1);
-      }
-      if (actividad.trimestre2.actividad) {
-        this.avanceTr2 += actividad.ponderado / 100 * (actividad.trimestre2.actividad <= 1 ? actividad.trimestre2.actividad : 1);
-      }
-      if (actividad.trimestre3.actividad) {
-        this.avanceTr3 += actividad.ponderado / 100 * (actividad.trimestre3.actividad <= 1 ? actividad.trimestre3.actividad : 1);
-      }
-      if (actividad.trimestre4.actividad) {
-        this.avanceTr4 += actividad.ponderado / 100 * (actividad.trimestre4.actividad <= 1 ? actividad.trimestre4.actividad : 1);
-      }
-    }
-  }
-
-  graficarBarras() {
-    let numero = 0;
-    let actividades: any[] = [];
-
-    for (let index = 0; index < this.actividades.length; index++) {
-      const actividad = this.actividades[index];
-      if (numero != actividad.numero) {
-        numero = actividad.numero;
-      } else {
-        continue;
-      }
-
-      let actividadValor
-      if (this.avanceTr4) {
-        actividadValor = Math.round((actividad.trimestre4.actividad * 100) * 100) / 100
-      } else if (this.avanceTr3) {
-        actividadValor = Math.round((actividad.trimestre3.actividad * 100) * 100) / 100
-      } else if (this.avanceTr2) {
-        actividadValor = Math.round((actividad.trimestre2.actividad * 100) * 100) / 100
-      } else if (this.avanceTr1) {
-        actividadValor = Math.round((actividad.trimestre1.actividad * 100) * 100) / 100
-      }
-      actividades.push({ name: actividad.actividad, value: actividadValor })
-    }
-    this.barChartData = actividades;
-  }
-
-  graficarCircular() {
-    let avance = 0;
-    if (this.tr4) {
-      avance = this.avanceTr4;
-    } else if (this.tr3) {
-      avance = this.avanceTr3;
-    } else if (this.tr2) {
-      avance = this.avanceTr2;
-    } else {
-      avance = this.avanceTr1;
-    }
   }
 }
