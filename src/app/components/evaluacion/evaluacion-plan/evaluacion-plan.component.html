@@ -21,11 +21,11 @@
       [yAxis]="true"
       [showXAxisLabel]="true"
       [showYAxisLabel]="true"
-      [xAxisLabel]="'Unidad'"
       [yAxisLabel]="'Avance'"
+      [xAxisLabel]="'Actividad'"
       [yScaleMin]="0"
       [yScaleMax]="100">
-      </ngx-charts-bar-vertical>
+    </ngx-charts-bar-vertical>
     </div>
     <div class="small-content">
       <mat-card-title style="text-align: center;">Nivel de avance</mat-card-title>
@@ -363,7 +363,7 @@
         <div *ngIf="row.trimestre3.meta > 1">
           100% <br> (+{{row.trimestre3.meta - 1 | percent:'1.2-2':'es'}})
         </div>
-        <div *ngIf="row.trimestre1.meta === undefined">
+        <div *ngIf="row.trimestre3.meta === undefined">
           N/A
         </div>
       </td>
@@ -399,7 +399,7 @@
         <div *ngIf="row.trimestre3.actividad > 1">
           100% <br> (+{{row.trimestre3.actividad - 1 | percent:'1.2-2':'es'}})
         </div>
-        <div *ngIf="row.trimestre1.meta === undefined">
+        <div *ngIf="row.trimestre3.meta === undefined">
           N/A
         </div>
       </td>
