@@ -303,7 +303,7 @@ export class EvaluacionPlanComponent implements OnInit {
       }
 
       actividades.push({
-        name: actividad.actividad,
+        name: actividad.numero,
         value: actividadValor
       });
     }

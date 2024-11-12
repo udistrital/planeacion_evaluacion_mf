@@ -65,8 +65,6 @@ export class EvaluacionComponent implements OnInit {
   spans: { [key: string]: number }[] = [];
 
   // Opciones para gráfico "pie chart"
-  pieTitle = 'Cumplimiento general Plan de Acción -';
-  pieChartData = [{ name: '', value: 75 }, { name: '', value: 25 }];
   pieChartColor: Color = {
     name: 'customScheme',
     selectable: true,
@@ -520,10 +518,5 @@ export class EvaluacionComponent implements OnInit {
     } else {
       avance = this.avanceTr1;
     }
-
-    this.pieChartData = [
-      { "name": "Avance", "value": avance * 100 },
-      { "name": "Restante", "value": 100 - avance * 100 }
-    ];
   }
 }
