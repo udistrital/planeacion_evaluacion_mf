@@ -303,7 +303,7 @@ export class EvaluacionPlanComponent implements OnInit {
       }
 
       actividades.push({
-        name: actividad.actividad,
+        name: actividad.numero,
         value: actividadValor
       });
     }
@@ -332,7 +332,7 @@ export class EvaluacionPlanComponent implements OnInit {
     return Math.abs(value);
   }
 
-  getBackgroundColor(actividad: number): string {
+  getBackgroundColor(actividad: number): string | void {
     if (actividad >= 0 && actividad <= 0.2) {
       return '#c71a1b';
     } else if (actividad >= 0.201 && actividad <= 0.40) {
@@ -343,9 +343,10 @@ export class EvaluacionPlanComponent implements OnInit {
       return '#fffe00';
     } else if (actividad >= 0.801) {
       return '#72ac41';
-    } else {
-      return 'transparent'; // default or no color
     }
+    // else {
+    //   return 'transparent'; // default or no color
+    // }
   }
 
 }
